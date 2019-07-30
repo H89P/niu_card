@@ -13,6 +13,7 @@ In the following all details of my hass.io implementation are documented:
 * Custom components
 * Configuration.yaml
 * [Lovelace.yaml](https://github.com/H89P/niu_card/blob/master/resources/lovelace.yaml)
+* Node-Red Addon
 
 
 ## Custom components:
@@ -25,3 +26,7 @@ In the following all details of my hass.io implementation are documented:
 * [**mini-graph-card**](https://github.com/kalkih/mini-graph-card) - 
   This component is used to show the charging cycle in Watts
 
+## Node-Red Addon:
+This addon is used for the whole API request implementation and some automations. This of course can be done with other means as well but was done with Node Red as it was the most practicable solution for me
+
+The addon can be found in the hass.io addon store. Documentation can be found [here](https://github.com/hassio-addons/addon-node-red/blob/v4.0.6/README.md)
