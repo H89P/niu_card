@@ -1,0 +1,192 @@
+resources:
+  - url: /local/card-tools.js?v=1
+    type: js
+  - url: /customcards/github/custom-cards/tracker-card.js?track=true
+    type: module
+  - url: /community_plugin/vertical-stack-in-card/vertical-stack-in-card.js
+    type: js
+  - url: /community_plugin/compact-custom-header/compact-custom-header.js
+    type: module    
+    type: js
+  - url: /community_plugin/bar-card/bar-card.js
+    type: js
+  - url: /community_plugin/bignumber-card/bignumber-card.js
+    type: js
+  - url: /community_plugin/lovelace-fold-entity-row/fold-entity-row.js
+    type: js
+  - url: /community_plugin/lovelace-card-mod/card-mod.js
+    type: js
+  - url: /community_plugin/lovelace-theme-maker/theme-maker.js
+    type: js
+  - url: /community_plugin/lovelace-more-info-card/more-info-card.js
+    type: js
+  - url: /community_plugin/layout-card/layout-card.js
+    type: js
+  
+  
+  - badges: []
+    icon: mdi:motorbike
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        cards:
+          - type: picture-elements
+            image: /local/kilometer.png
+            elements:
+              - type: state-label
+                entity: sensor.niu_text
+                style:
+                  top: 50%
+                  font: roboto
+                  left: 25%
+                  font-size: 3em
+                  color: white
+          - type: custom:bar-card
+            title: Battery
+            color: "#F92672"
+            title_position: inside
+            animation: auto
+            height: 15px
+            entity: sensor.niu_battery
+          - type: picture-elements
+            image: /local/ride_stat.png
+            elements:
+              - type: state-label
+                entity: sensor.niu_total_mileage
+                style:
+                  top: 35%
+                  font: roboto
+                  left: 25%
+                  font-size: 3em
+                  color: white
+              - type: state-label
+                entity: sensor.niu_total_days
+                style:
+                  top: 65%
+                  font: roboto
+                  left: 15%
+                  font-size: 1.5em
+                  color: "#F92672"
+          - type: picture-elements
+            image: /local/charging.png
+            elements:
+              - type: state-label
+                entity:  sensor.niu_last_charge_euro
+                style:
+                  top: 35%
+                  left: 15%
+                  font-size: 1.5em
+                  color: "#F92672"   
+                  font: roboto
+              - type: state-label
+                entity:   sensor.niu_last_charge_kwh
+                prefix: "/ "
+                style:
+                  top: 35%
+                  left: 38%
+                  color: "#F92672"   
+                  font-size: 1.5em
+                  font: roboto
+              - type: state-label
+                entity:   sensor.niu_charge_count
+                style:
+                  top: 50%
+                  left: 70%
+                  font-size: 6em
+                  font: roboto
+                  color: white
+          - type: picture-elements
+            image: /local/charging_2.png
+            elements:
+              - type: state-label
+                entity:  sensor.niu_charging_euro_total
+                style:
+                  top: 40%
+                  left: 15%
+                  font-size: 1.5em
+                  color: "#F92672"   
+                  font: roboto
+              - type: state-label
+                entity:   sensor.niu_charging_kwh_total
+                prefix: "/ "
+                style:
+                  top: 40%
+                  left: 42%
+                  color: "#F92672"   
+                  font-size: 1.5em
+                  font: roboto
+              - type: state-label
+                entity:   sensor.niu_co2_saving_total
+                prefix: "-"
+                style:
+                  top: 75%
+                  left: 65%
+                  font-size: 2.5em
+                  font: roboto
+                  color: white
+          - type: picture-elements
+            image: /local/last_ride.png
+            elements:
+              - type: state-label
+                entity: sensor.niu_last_ride_km
+                style:
+                  top: 30%
+                  left: 25%
+                  font: roboto
+                  font-size: 3em
+                  color: white 
+              - type: state-label
+                entity:  sensor.niu_last_ride_time_2
+                style:
+                  top: 40%
+                  left: 85%
+                  font: roboto
+                  font-size: 1em
+                  color: "#F92672"  
+              - type: state-label
+                entity:  sensor.niu_last_ride_average_speed
+                style:
+                  top: 50%
+                  left: 65%
+                  font-size: 1em
+                  font: roboto
+                  color:  "#F92672" 
+          - type: picture-elements
+            image: /local/battery_health.png
+            elements:
+              - type: state-label
+                entity: sensor.niu_battery_grade
+                style:
+                  top: 70%
+                  left: 75%
+                  font: roboto
+                  font-size: 5em
+                  color: white
+              - type: state-label
+                entity:  sensor.niu_battery_temperature
+                prefix: "Temperatur: "
+                style:
+                  top: 65%
+                  left: 20%
+                  font: roboto
+                  font-size: 1em
+                  color: "#F92672" 
+              - type: state-label
+                entity:  sensor.niu_charge_count
+                prefix: "Ladevorgänge:  "
+                style:
+                  top: 80%
+                  left: 20%
+                  font: roboto
+                  font-size: 1em
+                  color: "#F92672"   
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.0x00158d000356d5c8_power
+            hours_to_show: 30
+            name: NIU Ladevorgang (Watt))
+            points_per_hour: 60
+            show:
+              labels: true
+            line_colorr: '#4286f4'
+    title: Mobility
