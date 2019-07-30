@@ -31,4 +31,4 @@ This addon is used for the whole API request implementation and some automations
 
 The addon can be found in the hass.io addon store. Documentation can be found [here](https://github.com/hassio-addons/addon-node-red/blob/v4.0.6/README.md)
 
-The documentation of my Node-REd flow can be found [here]()
+The documentation of my Node-Red flow can be found [here](https://github.com/H89P/niu_card/blob/master/resources/node-red.md)
