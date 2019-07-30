@@ -10,6 +10,12 @@ In the following all details of my hass.io implementation are documented:
 
 # Documentation:
 
-* Custom components:
+* Custom components
 * Configuration.yaml
 * Lovelace.yaml
+
+
+## Custom components:
+
+
+> [**layout-card**](https://github.com/thomasloven/lovelace-layout-card)
