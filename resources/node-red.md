@@ -1,3 +1,5 @@
+In the following all of the Node Red entities are documented. Watch out for the places where you need to enter your own credentials like TOKENS, SERIAL NUMBERS and the config for the MQTT Broker
+
 
 **start every half hour**
 
@@ -75,5 +77,80 @@
                 "9945fd5a.d2b34"
             ]
         ]
+    }
+    ]
+
+**set_niu_battery**
+
+    [
+    {
+        "id": "a0d59476.f31848",
+        "type": "change",
+        "z": "4b4281a5.b723e8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.data.batteries.compartmentA.batteryCharging",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 80,
+        "wires": [
+            [
+                "e2eab287.d9e87"
+            ]
+        ]
+    }
+    ]
+    
+**niu_battery**
+
+    [
+    {
+        "id": "e2eab287.d9e87",
+        "type": "mqtt out",
+        "z": "4b4281a5.b723e8",
+        "name": "niu_battery",
+        "topic": "node_red/niu_battery",
+        "qos": "",
+        "retain": "true",
+        "broker": "46614582.33caac",
+        "x": 990,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "46614582.33caac",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "YOUR_MQTT_BROKER_NAME",
+        "broker": "YOUR_BROKER",
+        "port": "YOUR_PORT",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "true",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "true",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "true",
+        "willPayload": ""
     }
     ]
