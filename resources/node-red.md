@@ -1,5 +1,7 @@
 In the following all of the Node Red entities are documented. Watch out for the places where you need to enter your own credentials like TOKENS, SERIAL NUMBERS and the config for the MQTT Broker
 
+<img  src=https://github.com/H89P/niu_card/blob/master/resources/node_red_pics/node_red_1.PNG>
+
 
 **start every half hour**
 
