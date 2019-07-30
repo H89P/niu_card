@@ -19,6 +19,9 @@ In the following all details of my hass.io implementation are documented:
 
 
 * [**layout-card**](https://github.com/thomasloven/lovelace-layout-card) - 
-  This component is used to make the screen one column only. This is important for the Desktop / Tablet view
-* [**layout-card**](https://github.com/thomasloven/lovelace-layout-card) - 
-  This component is used to make the screen one column only. This is important for the Desktop / Tablet view
+  This component is used to make the screen one column only. This is important for the Desktop / Tablet view. This component requires the component [card-tools](https://github.com/thomasloven/lovelace-card-tools) to work
+* [**bar-card**](https://github.com/custom-cards/bar-card) - 
+  This component is used to show the charging state
+* [**mini-graph-card**](https://github.com/kalkih/mini-graph-card) - 
+  This component is used to show the charging cycle in Watts
+
