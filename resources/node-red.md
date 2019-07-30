@@ -154,3 +154,228 @@ In the following all of the Node Red entities are documented. Watch out for the 
         "willPayload": ""
     }
     ]
+
+**set_niu_mileage_left**
+
+    [
+    {
+        "id": "ce4f8bad.5fe5d8",
+        "type": "change",
+        "z": "4b4281a5.b723e8",
+        "name": "set_niu_mileage_left",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.data.estimatedMileage",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 140,
+        "wires": [
+            [
+                "10064ad.e64b235"
+            ]
+        ]
+    }
+    ]
+    
+**niu_mileage**
+
+    [
+    {
+        "id": "10064ad.e64b235",
+        "type": "mqtt out",
+        "z": "4b4281a5.b723e8",
+        "name": "niu_mileage",
+        "topic": "node_red/niu_mileage",
+        "qos": "",
+        "retain": "true",
+        "broker": "46614582.33caac",
+        "x": 990,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "46614582.33caac",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "YOUR_MQTT_BROKER_NAME",
+        "broker": "YOUR_BROKER",
+        "port": "YOUR_PORT",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "true",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "true",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "true",
+        "willPayload": ""
+    }
+    ]
+
+**set_battery_temp**
+
+    [
+    {
+        "id": "8f262b60.98705",
+        "type": "change",
+        "z": "4b4281a5.b723e8",
+        "name": "set_battery_temp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.data.batteries.compartmentA.temperature",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 200,
+        "wires": [
+            [
+                "f8a81ad2.405578"
+            ]
+        ]
+    }
+    ]
+
+**niu_battery_temp**
+
+    [
+    {
+        "id": "f8a81ad2.405578",
+        "type": "mqtt out",
+        "z": "4b4281a5.b723e8",
+        "name": "niu_battery_temp",
+        "topic": "node_red/niu_battery_temp",
+        "qos": "",
+        "retain": "true",
+        "broker": "46614582.33caac",
+        "x": 1010,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "46614582.33caac",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "YOUR_MQTT_BROKER_NAME",
+        "broker": "YOUR_BROKER",
+        "port": "YOUR_PORT",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "true",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "true",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "true",
+        "willPayload": ""
+    }
+    ]
+
+**set_energy_consumed_today**
+
+    [
+    {
+        "id": "9945fd5a.d2b34",
+        "type": "change",
+        "z": "4b4281a5.b723e8",
+        "name": "set_energy_consumed_today",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.data.batteries.compartmentA.energyConsumedTody",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 810,
+        "y": 260,
+        "wires": [
+            [
+                "95359b16.fd9e98"
+            ]
+        ]
+    }
+    ]
+
+**consumed_today**
+
+    [
+    {
+        "id": "95359b16.fd9e98",
+        "type": "mqtt out",
+        "z": "4b4281a5.b723e8",
+        "name": "niu_consumed_today",
+        "topic": "node_red/niu_consumed_today",
+        "qos": "",
+        "retain": "true",
+        "broker": "46614582.33caac",
+        "x": 1080,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "46614582.33caac",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "YOUR_MQTT_BROKER_NAME",
+        "broker": "YOUR_BROKER",
+        "port": "YOUR_PORT",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "true",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "true",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "true",
+        "willPayload": ""
+    }
+    ]
