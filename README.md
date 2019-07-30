@@ -18,4 +18,7 @@ In the following all details of my hass.io implementation are documented:
 ## Custom components:
 
 
-> [**layout-card**](https://github.com/thomasloven/lovelace-layout-card)
+* [**layout-card**](https://github.com/thomasloven/lovelace-layout-card) - 
+  This component is used to make the screen one column only. This is important for the Desktop / Tablet view
+* [**layout-card**](https://github.com/thomasloven/lovelace-layout-card) - 
+  This component is used to make the screen one column only. This is important for the Desktop / Tablet view
