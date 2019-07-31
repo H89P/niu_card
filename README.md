@@ -29,7 +29,7 @@ In the following all details of my hass.io implementation are documented:
   This component is used to show the charging cycle in Watts
 
 ## Node-Red Addon:
-This addon is used for the whole API request implementation and some automations. This of course can be done with other means as well but was done with Node Red as it was the most practicable solution for me
+This addon is used for the whole API request implementation and some automations. This of course can be done with other means as well but was done with Node Red as it was the most practicable solution for me.
 
 The addon can be found in the hass.io addon store. Documentation can be found [here](https://github.com/hassio-addons/addon-node-red/blob/v4.0.6/README.md)
 
