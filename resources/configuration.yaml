@@ -1,0 +1,162 @@
+sensor:
+  - platform: mqtt
+    name: "NIU Battery"
+    state_topic: "node_red/niu_battery"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "NIU Mileage Left"
+    state_topic: "node_red/niu_mileage"
+    unit_of_measurement: "km"
+  - platform: mqtt
+    name: "NIU Battery Temperature"
+    state_topic: "node_red/niu_battery_temp"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "NIU consumed today"
+    state_topic: "node_red/niu_consumed_today"
+    unit_of_measurement: "??"    
+  - platform: mqtt
+    name: "NIU Latitude"
+    state_topic: "node_red/niu_latitude"
+  - platform: mqtt
+    name: "NIU Longitude"
+    state_topic: "node_red/niu_longitude"
+  - platform: mqtt
+    name: "NIU Last Track Time"
+    state_topic: "node_red/niu_last_track_time"
+    unit_of_measurement: "s"
+  - platform: mqtt
+    name: "NIU Last Track Distance"
+    state_topic: "node_red/niu_last_track_dist"
+    unit_of_measurement: "m"    
+  - platform: mqtt
+    name: "NIU Last Track Timestamp"
+    state_topic: "node_red/niu_last_track_timestamp"
+    unit_of_measurement: ""
+  - platform: mqtt
+    name: "NIU Last Charge kWh"
+    state_topic: "node_red/niu_last_charge_kwh"
+    unit_of_measurement: "kWh"
+    value_template: '{{value | round(2) }}'
+  - platform: mqtt
+    name: "NIU Last Charge Euro"
+    state_topic: "node_red/niu_last_charge_euro"
+    unit_of_measurement: "€" 
+    value_template: '{{value | round(2) }}'
+  - platform: mqtt
+    name: "NIU Last Charge Euro Total"
+    state_topic: "node_red/niu_last_charge_euro_ges"
+    unit_of_measurement: "€"
+    value_template: '{{value | round(2) }}'
+  - platform: mqtt
+    name: "NIU Charge Count"
+    state_topic: "node_red/niu_charge_count"
+    unit_of_measurement: ""
+  - platform: mqtt
+    name: "NIU Battery Grade"
+    state_topic: "node_red/niu_battery_grade"
+    unit_of_measurement: ""
+  - platform: mqtt
+    name: "NIU Total Mileage"
+    state_topic: "node_red/niu_total_mileage"
+    unit_of_measurement: "km"
+  - platform: mqtt
+    name: "NIU Total Days"
+    state_topic: "node_red/niu_total_days"
+    unit_of_measurement: "d"
+  - platform: mqtt
+    name: "NIU Last Ride Start Time"
+    state_topic: "node_red/niu_last_ride_starttime"
+    unit_of_measurement: ""
+  - platform: mqtt
+    name: "NIU Last Ride End Time"
+    state_topic: "node_red/niu_last_ride_endtime"
+    unit_of_measurement: ""
+  - platform: mqtt
+    name: "NIU Last Ride Distance"
+    state_topic: "node_red/niu_last_ride_distance"
+    unit_of_measurement: ""
+  - platform: mqtt
+    name: "NIU Last Ride Average Speed"
+    state_topic: "node_red/niu_last_ride_avgspeed"
+    unit_of_measurement: "km/h"
+  - platform: mqtt
+    name: "NIU Last Ride Time"
+    state_topic: "node_red/niu_last_ride_ridingtime"
+    unit_of_measurement: ""
+  - platform: mqtt
+    name: "NIU Last Ride Date"
+    state_topic: "node_red/niu_last_ride_date"
+    unit_of_measurement: ""
+  - platform: mqtt
+    name: "NIU Charging Cost Total"
+    state_topic: "node_red/charging_cost_total"
+    unit_of_measurement: "€"
+  - platform: mqtt
+    name: "NIU Charged kWh Total"
+    state_topic: "node_red/charging_kwh_total"
+    unit_of_measurement: "kWh"
+  - platform: mqtt
+    name: "NIU Total CO2 Saving"
+    state_topic: "node_red/co2_saving_total"
+    unit_of_measurement: "kg CO2"
+  - platform: template
+    sensors:
+      niu_status:
+        value_template: 'Status'
+      niu_text:
+        value_template: 'NIU'
+      niu_km_gesamt:    
+        friendly_name: Gesamt km
+        unit_of_measurement: 'km'
+        entity_id:
+          - sensor.niu_total_mileage
+        value_template: '{{ "{0:,.0f}".format(states.sensor.niu_total_mileage) }}'
+        icon_template: 'mdi:map-marker-distance'    
+      niu_last_ride_km:    
+        friendly_name: Letzte Fahrt km
+        unit_of_measurement: 'km'
+        entity_id:
+          - sensor.niu_last_ride_distance
+        value_template: '{{(states("sensor.niu_last_ride_distance")|int/1000) | round (2)}}'
+        icon_template: 'mdi:map-marker-distance'
+      niu_last_ride_time_2:    
+        friendly_name: Letzte Fahrt Zeit
+        unit_of_measurement: 'min'
+        entity_id:
+          - sensor.niu_last_ride_time
+        value_template: '{{(states("sensor.niu_last_ride_time")|int/60) | round (2) }}'
+        icon_template: 'mdi:clock-outline'    
+      niu_last_ride_timestamp:    
+        friendly_name: Letzte Fahrt Uhrzeit
+        entity_id:
+          - sensor.niu_last_track_timestamp
+        value_template: '{{ (states("sensor.niu_last_track_timestamp") | int / 1000 )| timestamp_local}}'
+        icon_template: 'mdi:calendar-clock'    
+      niu_co2_saving_total:    
+        friendly_name: Gesamteinsparung CO2
+        entity_id:
+          - sensor.niu_total_co2_saving
+        value_template:  '{{(states("sensor.niu_total_co2_saving")| float ) | round (2) }}'
+        icon_template: 'mdi:leaf'
+        unit_of_measurement: 'kg CO2'
+      niu_charging_kwh_total:    
+        friendly_name: Gesamtlademenge
+        entity_id:
+          - sensor.niu_charged_kwh_total
+        value_template:  '{{(states("sensor.niu_charged_kwh_total")| float ) | round (2) }}'
+        icon_template: 'mdi:battery_charging'
+        unit_of_measurement: 'kWh'
+      niu_charging_euro_total:    
+        friendly_name: Gesamtkosten
+        entity_id:
+          - sensor.niu_charging_cost_total
+        value_template:  '{{(states("sensor.niu_charging_cost_total")| float ) | round (2) }}'
+        icon_template: 'mdi:currency-usd'
+        unit_of_measurement: '€'
+      niu_start_charging:
+        friendly_name: Niu Switch Start
+        entity_id: 
+          - switch.0x00158d000356d5c8_switch
+        value_template: '{{as_timestamp(states("switch.0x00158d000356d5c8_switch.last_changed"))}}'
+        icon_template: 'mdi:calendar-clock'
