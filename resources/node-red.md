@@ -6,6 +6,8 @@ Make sure to replace the following placeholders:
 * YOUR_BROKER
 * YOUR_PORT
 * YOUR_TOKEN
+* YOUR_ENERGY_COST (ct/kWh)
+* YOUR_CO2_EMISSION_OF_COMPARED_VEHICLE (kg/km)
 
 In order to gather the TOKEN follow the instructions [here](https://github.com/volkerschulz/NIU-API)
 
@@ -914,3 +916,394 @@ Some of the sensor values gathered via the node red flows are not utiized in my 
         "willPayload": ""
     }
     ]
+
+**NIU Flow 2**
+
+<img src="https://github.com/H89P/niu_card/blob/master/resources/node_red_pics/node_red_2.PNG">
+
+    [
+    {
+        "id": "90d1d0e7.a63718",
+        "type": "api-call-service",
+        "z": "3029f75d.1728c8",
+        "name": "notify_start_percentage",
+        "server": "242cf831.b9a518",
+        "version": 1,
+        "service_domain": "notify",
+        "service": "telegram_notifier",
+        "entityId": "",
+        "data": "{\"message\":\"NIU Batterie lädt - Start bei: {{ entity.sensor.niu_battery }}%\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1209,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e7605834.48003",
+        "type": "server-state-changed",
+        "z": "3029f75d.1728c8",
+        "name": "charging_plug_changed",
+        "server": "242cf831.b9a518",
+        "version": 1,
+        "entityidfilter": "switch.0x00158d000356d5c8_switch",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 200,
+        "y": 82,
+        "wires": [
+            [
+                "7003aca9.fb2b9c",
+                "fc8e46d1.5c087"
+            ],
+            [
+                "175f7df.ba8de82",
+                "b56023c1.700d98",
+                "d647f87b.c30c98"
+            ]
+        ]
+    },
+    {
+        "id": "89fae87a.b2d828",
+        "type": "api-call-service",
+        "z": "3029f75d.1728c8",
+        "name": "",
+        "server": "242cf831.b9a518",
+        "version": 1,
+        "service_domain": "notify",
+        "service": "telegram_notifier",
+        "entityId": "",
+        "data": "{\"message\":\"NIU Batterie Ladevorgang beendet: \\n   Energieverbrauch:  {{entity.sensor.niu_last_charge_kwh}}kWh\\n   Kosten: {{entity.sensor.niu_last_charge_euro}}€\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1460,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7003aca9.fb2b9c",
+        "type": "ha-get-entities",
+        "z": "3029f75d.1728c8",
+        "server": "242cf831.b9a518",
+        "name": "get_kWh",
+        "rules": [
+            {
+                "property": "entity_id",
+                "logic": "is",
+                "value": "sensor.energy_spent",
+                "valueType": "str"
+            }
+        ],
+        "output_type": "split",
+        "output_empty_results": false,
+        "output_location_type": "msg",
+        "output_location": "payload",
+        "output_results_count": 1,
+        "x": 499,
+        "y": 80,
+        "wires": [
+            [
+                "c15e70ca.2e094"
+            ]
+        ]
+    },
+    {
+        "id": "50605c58.6bdbcc",
+        "type": "function",
+        "z": "3029f75d.1728c8",
+        "name": "set_initial_kwh",
+        "func": "var initial_kwh = msg.payload.state || 0;\nflow.set('initial_kwh',initial_kwh);\nmsg.payload = initial_kwh;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 939,
+        "y": 80,
+        "wires": [
+            [
+                "90d1d0e7.a63718"
+            ]
+        ]
+    },
+    {
+        "id": "b67422a.09ae96",
+        "type": "function",
+        "z": "3029f75d.1728c8",
+        "name": "calculate_kwh_spent",
+        "func": "var neu_kwh = msg.payload.state || 0;\nneu_kwh = neu_kwh - flow.get('initial_kwh');\nflow.set('new_kwh', neu_kwh);\nmsg.payload = neu_kwh;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 959,
+        "y": 140,
+        "wires": [
+            [
+                "78bdde2f.56f498"
+            ]
+        ]
+    },
+    {
+        "id": "175f7df.ba8de82",
+        "type": "ha-get-entities",
+        "z": "3029f75d.1728c8",
+        "server": "242cf831.b9a518",
+        "name": "get_kWh",
+        "rules": [
+            {
+                "property": "entity_id",
+                "logic": "is",
+                "value": "sensor.energy_spent",
+                "valueType": "str"
+            }
+        ],
+        "output_type": "split",
+        "output_empty_results": false,
+        "output_location_type": "msg",
+        "output_location": "payload",
+        "output_results_count": 1,
+        "x": 499,
+        "y": 140,
+        "wires": [
+            [
+                "3248e365.a2230c"
+            ]
+        ]
+    },
+    {
+        "id": "78bdde2f.56f498",
+        "type": "mqtt out",
+        "z": "3029f75d.1728c8",
+        "name": "niu_last_charge_kwh",
+        "topic": "node_red/niu_last_charge_kwh",
+        "qos": "",
+        "retain": "true",
+        "broker": "46614582.33caac",
+        "x": 1199,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e92b49aa.e9b3d",
+        "type": "function",
+        "z": "3029f75d.1728c8",
+        "name": "calculate_price",
+        "func": "var neu_kwh = msg.payload.state || 0;\nneu_kwh = neu_kwh - flow.get('initial_kwh');\nflow.set('new_kwh', neu_kwh);\nmsg.payload = neu_kwh* YOUR_ENERGY_COST;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 939,
+        "y": 200,
+        "wires": [
+            [
+                "19c0954a.04b83b",
+                "eaddc1e3.4d41"
+            ]
+        ]
+    },
+    {
+        "id": "19c0954a.04b83b",
+        "type": "mqtt out",
+        "z": "3029f75d.1728c8",
+        "name": "niu_last_charge_euro",
+        "topic": "node_red/niu_last_charge_euro",
+        "qos": "",
+        "retain": "true",
+        "broker": "46614582.33caac",
+        "x": 1199,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "3248e365.a2230c",
+        "type": "json",
+        "z": "3029f75d.1728c8",
+        "name": "convert_to_number",
+        "property": "payload.state",
+        "action": "",
+        "pretty": false,
+        "x": 709,
+        "y": 140,
+        "wires": [
+            [
+                "b67422a.09ae96",
+                "e92b49aa.e9b3d"
+            ]
+        ]
+    },
+    {
+        "id": "c15e70ca.2e094",
+        "type": "json",
+        "z": "3029f75d.1728c8",
+        "name": "convert_to_number",
+        "property": "payload.state",
+        "action": "",
+        "pretty": false,
+        "x": 709,
+        "y": 80,
+        "wires": [
+            [
+                "50605c58.6bdbcc"
+            ]
+        ]
+    },
+    {
+        "id": "eaddc1e3.4d41",
+        "type": "delay",
+        "z": "3029f75d.1728c8",
+        "name": "delay_5_sec",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1169,
+        "y": 280,
+        "wires": [
+            [
+                "89fae87a.b2d828"
+            ]
+        ]
+    },
+    {
+        "id": "b56023c1.700d98",
+        "type": "function",
+        "z": "3029f75d.1728c8",
+        "name": "calculate_total_kwh",
+        "func": "const globalHomeAssistant = global.get('homeassistant');\nvar ges_kwh = parseFloat(globalHomeAssistant.homeAssistant.states[\"sensor.niu_charged_kwh_total\"].state);\nvar n_kwh = parseFloat(globalHomeAssistant.homeAssistant.states[\"sensor.niu_last_charge_kwh\"].state);\nges_kwh = ges_kwh + n_kwh \nmsg.payload = ges_kwh\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 360,
+        "wires": [
+            [
+                "bc40be53.9347f"
+            ]
+        ]
+    },
+    {
+        "id": "d647f87b.c30c98",
+        "type": "function",
+        "z": "3029f75d.1728c8",
+        "name": "calculate_total_cost",
+        "func": "const globalHomeAssistant = global.get('homeassistant');\nvar ges_euro = parseFloat(globalHomeAssistant.homeAssistant.states[\"sensor.niu_charging_cost_total\"].state);\nvar n_euro = parseFloat(globalHomeAssistant.homeAssistant.states[\"sensor.niu_last_charge_euro\"].state);\nges_euro = ges_euro + n_euro \nmsg.payload = ges_euro\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 440,
+        "wires": [
+            [
+                "7643552c.f9ac74",
+                "bd7a62c9.3d063"
+            ]
+        ]
+    },
+    {
+        "id": "7643552c.f9ac74",
+        "type": "function",
+        "z": "3029f75d.1728c8",
+        "name": "calculate_total_co2_saving",
+        "func": "const globalHomeAssistant = global.get('homeassistant');\nvar n_co2 = parseFloat(YOUR_CO2_EMISSION_OF_COMPARED_VEHICLE*globalHomeAssistant.homeAssistant.states[\"sensor.niu_total_mileage\"].state- YOUR_ENERGY_COST*globalHomeAssistant.homeAssistant.states[\"sensor.niu_charged_kwh_total\"].state);\nmsg.payload = n_co2\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 860,
+        "y": 520,
+        "wires": [
+            [
+                "d9043ec.016844"
+            ]
+        ]
+    },
+    {
+        "id": "bd7a62c9.3d063",
+        "type": "mqtt out",
+        "z": "3029f75d.1728c8",
+        "name": "charging_cost_total",
+        "topic": "node_red/charging_cost_total",
+        "qos": "",
+        "retain": "true",
+        "broker": "46614582.33caac",
+        "x": 1190,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "bc40be53.9347f",
+        "type": "mqtt out",
+        "z": "3029f75d.1728c8",
+        "name": "charging_kwh_total",
+        "topic": "node_red/charging_kwh_total",
+        "qos": "",
+        "retain": "true",
+        "broker": "46614582.33caac",
+        "x": 1190,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d9043ec.016844",
+        "type": "mqtt out",
+        "z": "3029f75d.1728c8",
+        "name": "co2_saving_total",
+        "topic": "node_red/co2_saving_total",
+        "qos": "",
+        "retain": "true",
+        "broker": "46614582.33caac",
+        "x": 1190,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "242cf831.b9a518",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant",
+        "legacy": false,
+        "hassio": true,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true
+    },
+    {
+        "id": "46614582.33caac",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "YOUR_MQTT_BROKER_NAME",
+        "broker": "YOUR_MQTT_BROKER",
+        "port": "YOUR_PORT",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "true",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "true",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "true",
+        "willPayload": ""
+    }
+    ]
+    
