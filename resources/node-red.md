@@ -1,5 +1,16 @@
 In the following all of the Node Red entities are documented. Watch out for the places where you need to enter your own credentials like TOKENS, SERIAL NUMBERS and the config for the MQTT Broker
 
+Make sure to replace the following placeholders:
+* YOUR_MQTT_BROKER_NAME
+* YOUR_SERIAL_NUMBER
+* YOUR_BROKER
+* YOUR_PORT
+* YOUR_TOKEN
+
+In order to gather the TOKEN follow the instructions [here](https://github.com/volkerschulz/NIU-API)
+
+Some of the sensor values gathered via the node red flows are not utiized in my current implementation but already gathered for future use
+
 <img  src=https://github.com/H89P/niu_card/blob/master/resources/node_red_pics/node_red_1.PNG>
 
 
