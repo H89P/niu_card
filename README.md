@@ -15,6 +15,7 @@ In the following all details of my hass.io implementation are documented:
 * [Lovelace.yaml](https://github.com/H89P/niu_card/blob/master/resources/lovelace.yaml)
 * [Node-Red Config](https://github.com/H89P/niu_card/blob/master/resources/node-red.md)
 * [Telegram Bot](https://www.home-assistant.io/components/telegram/)
+* [Picutures](https://github.com/H89P/niu_card/tree/master/resources/pictures)
 
 
 ## Custom components:
